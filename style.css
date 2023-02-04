@@ -1,0 +1,66 @@
+body {
+    /* Largezza massima e centrale il body */
+    max-width: max-content;
+    margin: auto;
+}
+
+h1{
+    /* Cambia il tag h1 */
+    color:rgb(95, 190, 190);
+    text-transform: uppercase;
+}
+
+td a {
+    /* Cambia il colore di ogni link nella pagina 
+    Ps. io ho cambiato il colore dei link, se infatti si va su ispezione nella console di chrome si vede che la proprieta' e' corretta
+    l'unica cosa e' che nel file html ovviamente il colore non si vede perche' io ho associato il link ad una immagine, come chiesto dall'esercizio*/
+    color: red;
+}
+
+/* Crea una classe e assegnale un bordo */
+.bord-a{
+    border: 3px solid black;
+}
+
+/* Nascondo un elemento con hover */
+.bord-a:hover{
+    visibility: hidden;
+}
+
+/* Qui la consegna non era chiara, io comunque ho dato un bordo all'intera tabella */
+table {
+    border: 2px solid green;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Poi ho dato un bordo ad ogni singola cella della tabella andando a creare i bordi arrotondati */
+table tr td {
+    border: 2px solid green;
+    border-radius: 10px;
+    /* border-top: 2px dotted black; */
+}
+
+/* Aggiungi una classe ad ogni tr, NOTA: non si puo' utilizzare direttamente border su tr
+Io ho agito cosi: ho dato una classe univoca a tutti i primi td a cui ho assegnato le determinate proprieta',
+in questo modo sembra che tr abbia il bordo dotted rosso */
+table tr td.border-false-tr {
+    /* border-top: 4px dotted red; */
+    border-bottom: 4px dotted red;
+
+}
+
+/* Aggiungi un margine ad ogni paragrafo */
+p {
+    margin: 20px;
+}
+/* Crea una classe che ogni volta assegnata cambi la dimensione e il peso del font */
+.change {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* Crea una classe per nascondere un elemento */
+.visible{
+    visibility: hidden;
+}
