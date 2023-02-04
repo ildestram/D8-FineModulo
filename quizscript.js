@@ -98,94 +98,98 @@ const questions = [
     },
   ]
 
-const quizNode = document.getElementById("quiz");
-const answer = document.getElementById("header");
-const welcomeNode = document.querySelector(".welcome");
-const submitButton = document.getElementById("submit");
-const radios = document.getElementsByName("answer");
-
+const quizNode = document.getElementById('quiz');
+const answerEles = document.getElementById('header');
+const welcomeNode = document.querySelector('.welcome');
+const submitButton = document.getElementById('submit');
+const radios = document.getElementsByName('answer');
 let currentQuestion = 0;
 let score = 0;
-
-const loadQuiz = function(){
-    unselectAnswer();
+const loadQuiz = function () {
+    unSelectAnswer();
     let currentQuiz = questions[currentQuestion];
     let h2Element = document.getElementById("question");
-    {h2Element !== null && h2Element.parentNode.removeChild(h2Element)};
-    let h2 = document.createElement("h2");
-    h2.id = "question";
-    h2.innerText = currentQuestion + 1 + " " + currentQuiz.question;
-    answer.appendChild(h2);
-    let lisElements = document.querySelectorAll("#dynamicUL li");
-    for(let i = 0; (li = lisElements[i]); i++){
+    { h2Element !== null && h2Element.parentNode.removeChild(h2Element); }
+    let h2 = document.createElement('h2');
+    h2.id = 'question';
+    h2.innerText = currentQuestion + 1 + '.  ' + currentQuiz.question;
+    answerEles.appendChild(h2);
+    let listElements = document.querySelectorAll("#dynamicUL li");
+    for (let i = 0; (li = listElements[i]); i++) {
         li.parentNode.removeChild(li);
     }
-    let ul = document.createElement("ul");
+    let ul = document.createElement('ul');
     ul.id = "dynamicUL";
-    for(let i = 0; i < currentQuiz.incorrect_answers.length; i++){
-        let li = document.createElement("li");
-        let input = document.createElement("input");
-        input.type = "radio";
-        input.name = "answer";
+    for (let i = 0; i < currentQuiz.incorrect_answers.length; i++) {
+        let li = document.createElement('li');
+        let input = document.createElement('input')
+        input.type = 'radio';
+        input.name = 'answer';
         input.id = `srNo${i}`;
         input.value = currentQuiz.incorrect_answers[i];
-        let label = document.createElement("label");
+        let label = document.createElement('label')
         label.innerText = currentQuiz.incorrect_answers[i];
         label.htmlFor = `srNo${i}`;
         li.appendChild(input);
         li.appendChild(label);
-        li.appendChild(li);
+        ul.appendChild(li);
     }
-    answer.appendChild(ul);
+    answerEles.appendChild(ul);
 }
-
-const unselectAnswer = function(){
-    for(let i = 0; i < radios.length; i++){
-        radios[i].checked = false;
+const unSelectAnswer = function () {
+    for (i = 0; i < radios.length; i++) {
+        radios[i].checked = false
     }
 }
-
-const getSelectAnswer = function(){
+const getSelectedAnswer = function () {
     let answer;
-    for(let i = 0; i < radios.length; i++){
-        if(radios[i].length){
-            if(answer === questions[currentQuestion].correct_answer){
-                score++
-            }
-            currentQuestion++
-            if(currentQuestion < questions.length){
-                loadQuiz();
-            } else{
-                let percentage = (100 * score) / questions.length;
-                quizNode.style.textAlign = "center";
-                quizNode.style.paddingTop = "20px";
-                quizNode.innerHTML = `<h1>Results</h1>
-                <h3>Quiz completed successfully</h3>
-                <h3>Score</h3>
-                <h1>${percentage}%</h1>
-                <h5>${score}/${questions.length} questions</h5>
-                <button onclick="location.reload()">Reload</button>`
-            }
-        } else {
-            let welcomeNode = document.querySelector(".welcome");
-            {welcomeNode !== null && answer.removeChild(welcomeNode)};
-            submitButton.innerText = "Submit";
-            loadQuiz();
+    for (i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            answer = radios[i].value;
         }
     }
+    return answer
 }
-
-window.onload = function(){
-    let divNode = document.createElement("div");
-    divNode.className = "welcome";
-    let h1 = document.createElement("h1");
-    h1.innerText = "Welcome!";
-    let h2 = document.createElement("h2");
+submitButton.addEventListener('click', () => {
+    const answer = getSelectedAnswer();
+    console.log('answer:', answer);
+    if (answer) {
+        if (answer === questions[currentQuestion].correct_answer) {
+            score++;
+        }
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            loadQuiz();
+        } else {
+            let percentage = (100 * score) / questions.length;
+            quizNode.style.textAlign = 'center';
+            quizNode.style.paddingTop = '20px';
+            quizNode.innerHTML = `<h1>Results</h1>
+            <h3>Quiz completed successfully</h3>
+            <h3>Score</h3>
+            <h1>${percentage}%</h1>
+            <h5>${score}/${questions.length} questions</h5>
+            <button onclick="location.reload()">Realod</button>
+            `
+        }
+    } else {
+        let welcomeNode = document.querySelector('.welcome');
+        { welcomeNode !== null && answerEles.removeChild(welcomeNode) }
+        submitButton.innerText = 'Sumbit'
+        loadQuiz();
+    }
+})
+window.onload = function () {
+    let divNode = document.createElement('div');
+    divNode.className = 'welcome';
+    let h1 = document.createElement('h1');
+    h1.innerText = 'Welcome!';
+    let h2 = document.createElement('h2');
     h2.innerText = "Let's play quiz";
-    let h4 = document.createElement("h4");
-    h4.innerText = `Total questions: ${questions.length}`;
-    divNode.appendChild(h1);
-    divNode.appendChild(h2);
-    divNode.appendChild(h4);
-    answer.appendChild(divNode);
+    let h4 = document.createElement('h4');
+    h4.innerText = `Total questions: ${questions.length}`
+    divNode.appendChild(h1)
+    divNode.appendChild(h2)
+    divNode.appendChild(h4)
+    answerEles.appendChild(divNode)
 }
